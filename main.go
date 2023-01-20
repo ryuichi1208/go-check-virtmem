@@ -12,8 +12,8 @@ import (
 )
 
 type options struct {
-	critPct float64 `short:"c" long:"critical-pct" description:"Committed_AS/CommitLimit * 100 %" default:"1" required:"true"`
-	warnPct float64 `short:"w" long:"warning-pct" description:"Committed_AS/CommitLimit * 100 %" default:"1" required:"true"`
+	CritPct float64 `short:"c" long:"critical-pct" default:"95"`
+	WarnPct float64 `short:"w" long:"warning-pct" default:"90"`
 }
 
 var opts options
@@ -46,7 +46,7 @@ func parseMemInfo(path string) (float64, error) {
 }
 
 func parseArgs(args []string) error {
-	_, err := flags.ParseArgs(&opts, os.Args)
+	_, err := flags.ParseArgs(&opts, args)
 
 	if err != nil {
 		return err
@@ -69,12 +69,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	if opts.warnPct < result {
+	if opts.WarnPct < result {
 		chkSt = checkers.WARNING
 		msg = fmt.Sprintf("[WARN] VirtMem Usage:%f %s", result, "%")
 	}
 
-	if opts.critPct < result {
+	if opts.CritPct < result {
 		chkSt = checkers.CRITICAL
 		msg = fmt.Sprintf("[CRIT] VirtMem Usage:%f %s", result, "%")
 	}
