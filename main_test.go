@@ -12,7 +12,30 @@ func Test_parseMemInfo(t *testing.T) {
 		want    float64
 		wantErr bool
 	}{
-		// TODO: Add test cases.
+		{
+			name: "nomal01",
+			args: args{
+				path: "./t/test001.txt",
+			},
+			want:    100,
+			wantErr: false,
+		},
+		{
+			name: "nomal02",
+			args: args{
+				path: "./t/test002.txt",
+			},
+			want:    50,
+			wantErr: false,
+		},
+		{
+			name: "err01",
+			args: args{
+				path: "./t/test00x.txt",
+			},
+			want:    0,
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -36,9 +59,7 @@ func Test_parseArgs(t *testing.T) {
 		name    string
 		args    args
 		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
+	}{}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := parseArgs(tt.args.args); (err != nil) != tt.wantErr {

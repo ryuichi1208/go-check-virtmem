@@ -55,13 +55,7 @@ func parseArgs(args []string) error {
 	return nil
 }
 
-func main() {
-	err := parseArgs(os.Args[1:])
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
+func run() {
 	chkSt := checkers.OK
 	msg := "OK"
 	result, err := parseMemInfo("/proc/meminfo")
@@ -80,4 +74,14 @@ func main() {
 	}
 
 	checkers.NewChecker(chkSt, msg).Exit()
+
+}
+
+func main() {
+	err := parseArgs(os.Args[1:])
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	run()
 }
